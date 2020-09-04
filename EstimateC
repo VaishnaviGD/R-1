@@ -1,0 +1,40 @@
+from flask import Flask, jsonify, abort
+
+app = Flask(__name__)
+
+eandc = [
+    {
+        'no': 1,
+        'material': u'Steel Pole',
+        'description': u'design flexibility, high strength, relatively light weight, long life',
+        'quantity': u'7'
+    },
+    {
+        'no': 2,
+        'material': u'PVC cable',
+        'description': u'electrical cable construction for insulation, bedding and sheathing',
+        'quantity': u'10Kg'
+    },
+    {
+        'no': 3,
+        'material': u'Guarding wires',
+        'description': u'A grounded conductor placed beneath an overhead transmission line in order to ground the line, in case it breaks, before reaching the ground',
+        'quantity': u'3.5Kg'
+    },
+    {
+       'no': 4,
+       'material': u'Earth wire',
+       'description': u'Earthing is used to protect you from an electric shock',
+       'quantity': u'10m'
+    }
+]
+
+@app.route('/estimationcosting/api/v1.0/eandc/<int:ec_no>', methods=['POST'])
+def get_enadc(ec_no):
+    eandc = [eandc for eandc in eandc if eandc['no'] == ec_no]
+    if len(eandc) == 0:
+        abort(404)
+    return jsonify({'eandc': eandc})
+
+if __name__ == '__main__':
+    app.run(debug=True)
